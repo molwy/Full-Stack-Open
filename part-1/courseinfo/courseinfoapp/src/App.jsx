@@ -1,4 +1,3 @@
-const App = () => {
   const Header = (props) => {
     console.log(props)
     return (
@@ -7,6 +6,7 @@ const App = () => {
       </div>
     )
   }
+
   const Part = (props) => {
     console.log(props)
     return (
@@ -15,13 +15,14 @@ const App = () => {
       </div>
     )
   }
+  
   const Content = (props) => {
     console.log(props)
     return (
       <div>
-          <Part content={course.parts[0].name} exercises={course.parts[0].exercises} />
-          <Part content={course.parts[1].name} exercises={course.parts[1].exercises} />
-          <Part content={course.parts[2].name} exercises={course.parts[2].exercises} />
+          <Part content={props.parts[0].name} exercises={props.parts[0].exercises} />
+          <Part content={props.parts[1].name} exercises={props.parts[1].exercises} />
+          <Part content={props.parts[2].name} exercises={props.parts[2].exercises} />
       </div> 
     )
   }
@@ -30,11 +31,12 @@ const App = () => {
     console.log(props)
     return (
       <div>
-        Total Number of exercises is {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises}
+        Total Number of exercises is {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}
       </div>
     )
   }
 
+const App = () => {
   const course = {
     name: 'Half Stack application development',
     parts: [
