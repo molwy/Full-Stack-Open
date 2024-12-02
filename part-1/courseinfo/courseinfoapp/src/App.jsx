@@ -1,5 +1,5 @@
   const Header = (props) => {
-    console.log(props)
+    // console.log(props)
     return (
       <div>
         <h1><p>{props.course}</p></h1>
@@ -8,30 +8,43 @@
   }
 
   const Part = (props) => {
-    console.log(props)
+    // console.log(props)
     return (
       <div>
         <p>{props.content} has {props.exercises} exercises </p>
       </div>
     )
   }
-  
+
   const Content = (props) => {
-    console.log(props)
+    // console.log(props)
+    var parts = props.parts 
+    var partsArray = Array(parts.length)
+    parts.forEach(element => {
+     partsArray.push(
+      <Part content={element.name} exercises={element.exercises} />
+      )
+    }
+    );
     return (
       <div>
-          <Part content={props.parts[0].name} exercises={props.parts[0].exercises} />
-          <Part content={props.parts[1].name} exercises={props.parts[1].exercises} />
-          <Part content={props.parts[2].name} exercises={props.parts[2].exercises} />
+        {partsArray}
       </div> 
     )
   }
 
   const Total = (props) => { 
-    console.log(props)
+    // console.log(props)
+    var parts = props.parts
+    var total = 0
+    parts.forEach(element => {
+      console.log(element.name)
+      total = total + element.exercises 
+    });
+    console.log(total)
     return (
       <div>
-        Total Number of exercises is {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}
+        Total Number of exercises is {total}
       </div>
     )
   }
