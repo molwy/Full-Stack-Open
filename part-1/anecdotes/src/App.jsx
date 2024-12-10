@@ -3,7 +3,7 @@ import { useState } from 'react'
 const VoteButton = (props) => {
   // console.log(props)
   var handleVoteClick = props.phandleVoteClick
-  var text = props.ptext 
+  var text = props.ptext
   return <button onClick={handleVoteClick}>{text}</button>
 }
 
@@ -19,17 +19,29 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
-  ] 
+  ]
 
   const [selected, setSelected] = useState(0)
   const [currentVoteCount, setCurrentVoteCount] = useState(0)
+  const [topAnecdote, setTopAnecdote] = useState(
+    {
+      'anecdote': anecdotes[0],
+      'votes': votesArray[0]
+    }
+  )
 
-    // console.log(votesArray)
   const handleVoteClick = () => {
     votesArray[selected] += 1
     setCurrentVoteCount(votesArray[selected])
-    // console.log(selected, anecdotes[selected], votesArray[selected])
-}
+    if (votesArray[selected] > topAnecdote['votes']) { 
+      setTopAnecdote({
+        'anecdote': anecdotes[selected],
+        'votes': votesArray[selected]
+      }
+      )
+    }
+  }
+
   const nextAnecdote = () => {
     const randomNumber = Math.floor(Math.random() * 8)
     // console.log(randomNumber)
@@ -40,16 +52,20 @@ const App = () => {
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p> 
-        <p>has {currentVoteCount} votes</p>
-       <p>
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
+      <p>has {currentVoteCount} votes</p>
+      <p>
         <VoteButton phandleVoteClick={handleVoteClick} ptext="vote" />
       </p>
       <p>
         <button onClick={nextAnecdote}>
-        next anecdote
+          next anecdote
         </button>
       </p>
+      <h1>Anecdote with most votes</h1>
+      <p>{topAnecdote['anecdote']}</p>
+      <p>has {topAnecdote['votes']} votes</p>
     </div>
   )
 }
