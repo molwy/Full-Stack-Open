@@ -14,7 +14,7 @@ const StatisticLine = (props) => {
   return (
     <tr>
       <td>{props.text}</td>
-      <td>{props.value}</td>
+      <td>{props.value}{props.percent}</td>
     </tr>
   )
 }
@@ -26,8 +26,8 @@ const Statistics = (props) => {
   var pneutral = props.neutral
   var pbad = props.bad
   var getAll = (pgood + pbad + pneutral)
-  var getAverage = (pgood + -pbad) / 3
-  var getPositive = pgood / getAll
+  var getAverage = ((pgood + -pbad) / 3).toFixed(2)
+  var getPositive = ((pgood / getAll) * 100).toFixed(2)
 
   if (getAll === 0) {
     return (
@@ -44,7 +44,7 @@ const Statistics = (props) => {
         <StatisticLine text="bad" value={pbad} />
         <StatisticLine text="all" value={getAll} />
         <StatisticLine text="average" value={getAverage} />
-        <StatisticLine text="positive" value={getPositive} />
+        <StatisticLine text="positive" value={getPositive} percent={'%'} />
       </tbody>
     </table>
   )
