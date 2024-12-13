@@ -38,12 +38,13 @@ const Content = (props) => {
 const Total = (props) => { 
   // console.log(props)
   var parts = props.parts
-  var total = 0
-  parts.forEach(element => {
-    console.log(element.name)
-    total = total + element.exercises 
-  });
-  console.log(total)
+  const calculateSum = (sum, element) => {
+    // console.log(sum, element)
+    return sum + element.exercises
+    }
+  
+  var total = parts.reduce(calculateSum, 0)
+  // console.log(total)
   return (
     <div>
       Total Number of exercises is {total}
