@@ -32,11 +32,15 @@ const addName = (event) => {
           number: newNumber,
           id: String(persons.length + 1),
           }
-        setPersons(persons.concat(nameObject))
+      axios
+        .post('http://localhost:3001/persons', nameObject)
+        .then(response => {
+        setPersons(persons.concat(response.data))
         setNewName('')
         setNewNumber('')
-        }
-    }
+    })
+  }
+}
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
