@@ -41,6 +41,16 @@ const addName = (event) => {
     })
   }
 }
+const removeName = (id) => {
+  if (window.confirm("Are you sure you want to delete this name?")) {
+    const newPersonList = persons.filter(person => person.id !== id)
+    personService
+      .removeName(id)
+      .then(() => {
+        setPersons(newPersonList)
+      })
+  }
+}
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -68,18 +78,18 @@ const addName = (event) => {
     <div>
       <h2>Phonebook</h2>
 
-      <Filter filterState = {filter} updateFilterState = {updateFilter} />
+      <Filter filterState={filter} updateFilterState={updateFilter} />
 
       <h3>New Contact</h3>
 
-      <PersonForm addName = {addName} newName = {newName} handleNameChange = {handleNameChange} newNumber = {newNumber} handleNumberChange = {handleNumberChange} />
+      <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
 
       <h3>Numbers</h3>
 
-      <Persons personsToShow = {personsToShow} /> 
+      <Persons personsToShow={personsToShow} deleteFunction={removeName} /> 
 
     </div>
-  )
+    )
 }
 
 export default App
