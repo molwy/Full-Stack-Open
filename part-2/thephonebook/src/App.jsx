@@ -19,14 +19,36 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
-
+ 
 const addName = (event) => {
   event.preventDefault()
   if (persons.some(person => person.name === newName)) {
-    window.alert(newName + ' is already added to phonebook')
-    } else if (persons.some(person => person.number === newNumber)) {
+      const updateDecision = window.confirm(newName + ' is already added to phonebook, replace the old number with the new one?') 
+      if (updateDecision) {
+        const personToUpdate = persons.filter(person => person.name === newName)[0]
+        const nameObject = {
+            name: personToUpdate.name,
+            number: newNumber,
+            id: personToUpdate.id,
+          }
+        personService
+          .update(nameObject.id, nameObject)
+          .then(returnedPerson => {
+            // Update list by filtering out old and concatenating new
+            const newPersonList = persons.filter(person => person.id !== nameObject.id).concat(nameObject)
+            setPersons(newPersonList)
+            setNewName('')
+            setNewNumber('')
+          }
+        )
+      }
+    }
+ 
+    else if (persons.some(person => person.number === newNumber)) {
     window.alert(newNumber + ' is already added to phonebook')
-    } else {
+    } 
+    
+    else {
         const nameObject = {
           name: newName,
           number: newNumber,
@@ -51,6 +73,8 @@ const removeName = (id) => {
       })
   }
 }
+
+
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
